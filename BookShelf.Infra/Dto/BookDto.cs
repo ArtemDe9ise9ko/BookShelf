@@ -1,6 +1,6 @@
 ﻿namespace BookShelf.Infra.Dto
 {
-    public class BookDto
+    public class BookDtoRequest
     {
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;

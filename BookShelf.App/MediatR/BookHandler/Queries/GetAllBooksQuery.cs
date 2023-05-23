@@ -3,5 +3,5 @@ using MediatR;
 
 namespace BookShelf.App.MediatR.BookHandler.Queries
 {
-    public class GetAllBooksQuery : IRequest<List<BookDto>> { }
+    public class GetAllBooksQuery : IRequest<List<BookDtoResponse>> { }
 }

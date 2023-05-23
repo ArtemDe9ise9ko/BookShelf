@@ -1,20 +1,167 @@
-/* You can add global styles to this file, and also import other style files */
-
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+/* @import '~ngx-bootstrap/datepicker/bs-datepicker.css'; */
+body {
+    margin: 0;
+    background-color: #fafafa;
+    display: block;
 }
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.navbar{
+  background-color: #1b1b1b;
+  box-shadow: 0 .100rem .75rem rgb(80, 255, 0);
 }
-
-code {
-  color: #e01a76;
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
 }
-
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+.close{
+  background: transparent;
+  border: 2px solid red;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  color: red;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 5px 23px;
+  transition: all .3s;
+}
+.close:hover{
+  box-shadow: 0 0 5px rgba(150, 2, 2, 0.3);
+}
+table {
+  width: 100%;
+  box-shadow: 0 0 3px rgba(0, 0, 0, .5);
+  vertical-align: middle;
+}
+tbody {
+  background: rgba(100, 175, 255, .1);
+}
+tr{
+  margin: 20px;
+}
+th,
+td {
+  padding: 0 15px;
+  height: auto;
+}
+td {
+  border-bottom: #3b4151 solid 1px;
+}
+button{
+  border: 0px;
+  background-color: transparent;
+}
+.btn-book-main-action{
+  margin: 15px 0;
+  justify-content: baseline !important;
+}
+.btn-book-main-action:hover{
+  box-shadow: 0 0 5px rgba(0,0,0,.3);
+}
+.btn-book-action{
+  margin: 5px 0;
+}
+.btn{
+  background: transparent;
+  border: 2px solid gray;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  color: #3b4151;
+  font-family: sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 5px 23px;
+  transition: all .3s;
+}
+.btn:hover{
+  box-shadow: 0 0 5px rgba(0,0,0,.3);
+}
+.book-form, .form-group{
+  width: 100%;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+.input-group-text{
+  margin: 15px 0;
+  height: 40px;
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  border-radius: 0;
+}
+tr.selected {
+  background: rgba(100, 175, 255, .1);
+}
+.search-bar{
+  margin: 15px 0;
+  border-left: 0;
+}
+.search-bar:active, .search-bar:hover, .search-bar:focus-visible{
+  border-left: 0;
+}
+.input-group {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.start-content {
+  display: flex;
+  align-items: baseline;
+}
+.end-content {
+  display: flex;
+  align-items: stretch;
+}
+.form-group > input, .book-form > button{
+  width: 100%;
+  height: 50px;
+}
+.form-group > label{
+  width: 100%;
+  padding-top: 10px;
+}
+.form-group > input, .form-group > textarea{
+  border: 2px solid #ebebeb;
+  font-size: 15px;
+  padding: 0 15px;
+  border-radius: 1.25rem;
+  transition: all 0.375s;
+}
+.form-group > textarea{
+  resize: none;
+  height: 120px;
+}
+.form-group > input:hover, .form-group > textarea:hover{
+  border: 2px solid #10449a;
+}
+.book-form > button{
+  cursor: pointer;
+  width:100%;
+  padding: 0 16px;
+  margin: 30px 0 10px 0;
+  border-radius: 1.25rem;
+  background: #216ce7;
+  color: #f9f9f9;
+  border: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 2px;
+  transition: all 0.375s;
+}
+.book-form > button:hover{
+  box-shadow: 0 0 5px rgba(0,0,0,.3);
+}
+.invalid-border{
+  background-color: rgba(255, 0, 0, 0.05);
+  border: 2px solid red;
 }

@@ -5,10 +5,10 @@ namespace BookShelf.App.Interfaces
 {
     public interface IBookShelfService
     {
-        Task<List<BookDto>> GetAll();
-        Task<BookDto> GetById(string id);
-        Task Add(BookDto model);
-        Task Update(string id, BookDto model);
+        Task<List<BookDtoResponse>> GetAll();
+        Task<BookDtoResponse> GetById(string id);
+        Task Add(BookDtoRequest model);
+        Task Update(BookDtoResponse model);
         Task Delete(string id);
     }
 }

@@ -3,7 +3,7 @@ using MediatR;
 
 namespace BookShelf.App.MediatR.BookHandler.Queries
 {
-    public class GetByIdBookQuery : IRequest<BookDto>
+    public class GetByIdBookQuery : IRequest<BookDtoResponse>
     {
         public string Id { get; set; } = null!;
     }

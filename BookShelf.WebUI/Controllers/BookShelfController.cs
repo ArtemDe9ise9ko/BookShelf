@@ -2,11 +2,12 @@
 using BookShelf.Infra.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 namespace BookShelf.WebUI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class BookShelfController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -16,9 +17,9 @@ namespace BookShelf.WebUI.Controllers
             _mediator = mediator;
         }
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<BookDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<BookDtoResponse>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        public async Task<ActionResult<List<BookDto>>> GetBooks()
+        public async Task<ActionResult<List<BookDtoResponse>>> GetBooks()
         {
             try
             {
@@ -30,10 +31,10 @@ namespace BookShelf.WebUI.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BookDto))]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BookDtoResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        public async Task<ActionResult<BookDto>> GetBookById(string id)
+        public async Task<ActionResult<BookDtoResponse>> GetBookById(string id)
         {
             try
             {
@@ -48,7 +49,7 @@ namespace BookShelf.WebUI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        public async Task<IActionResult> AddBook(BookDto model)
+        public async Task<IActionResult> AddBook(BookDtoRequest model)
         {
             try
             {
@@ -61,14 +62,14 @@ namespace BookShelf.WebUI.Controllers
             }
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        public async Task<IActionResult> UpdateBook(string id, BookDto model)
+        public async Task<IActionResult> UpdateBook(BookDtoResponse model)
         {
             try
             {
-                await _mediator.Send(new UpdateBookQuery { Id = id, BookDto = model });
+                await _mediator.Send(new UpdateBookQuery { BookDtoResponse = model });
                 return Ok();
             }
             catch (Exception ex)
@@ -77,7 +78,7 @@ namespace BookShelf.WebUI.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         public async Task<IActionResult> DeleteBook(string id)

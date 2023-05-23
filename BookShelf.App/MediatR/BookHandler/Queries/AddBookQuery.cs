@@ -5,6 +5,6 @@ namespace BookShelf.App.MediatR.BookHandler.Queries
 {
     public class AddBookQuery : IRequest
     {
-        public BookDto BookDto { get; set; } = null!;
+        public BookDtoRequest BookDto { get; set; } = null!;
     }
 }

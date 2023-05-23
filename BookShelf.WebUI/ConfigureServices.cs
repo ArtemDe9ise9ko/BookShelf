@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.OpenApi.Models;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -34,10 +35,10 @@ namespace Microsoft.Extensions.DependencyInjection
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API V1");
             });
 
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller}/{action=Index}/{id?}");
-
             app.MapFallbackToFile("index.html");
 
             return app;

@@ -8,13 +8,19 @@ namespace BookShelf.Infra.Mapper
     {
         public MappingProfile()
         {
-            CreateMap<BookDto, Book>()
-                .ForMember(m => m.PageCount, opt => opt.MapFrom(r => Convert.ToInt32(r.PageCount)))
-                .ForMember(m => m.PublishDate, opt => opt.MapFrom(r => DateTime.Parse(r.PublishDate).Date));
+            CreateMap<BookDtoRequest, Book>()
+                .ForMember(dest => dest.PageCount, opt => opt.MapFrom(src => Convert.ToInt32(src.PageCount)))
+                .ForMember(dest => dest.PublishDate, opt => opt.MapFrom(src => DateTime.Parse(src.PublishDate).Date));
 
-            CreateMap<Book, BookDto>()
-                .ForMember(m => m.PageCount, opt => opt.MapFrom(r => r.PageCount))
-                .ForMember(m => m.PublishDate, opt => opt.MapFrom(r => DateTime.Parse(r.PublishDate.ToString("yy MM dd")).Date));
+            CreateMap<BookDtoResponse, Book>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Convert.ToInt32(src.BookId)))
+                .ForMember(dest => dest.PageCount, opt => opt.MapFrom(src => Convert.ToInt32(src.PageCount)))
+                .ForMember(dest => dest.PublishDate, opt => opt.MapFrom(src => DateTime.Parse(src.PublishDate).Date));
+
+            CreateMap<Book, BookDtoResponse>()
+                .ForMember(dest => dest.BookId, opt => opt.MapFrom(src => src.Id.ToString()))
+                .ForMember(dest => dest.PageCount, opt => opt.MapFrom(src => src.PageCount.ToString()))
+                .ForMember(dest => dest.PublishDate, opt => opt.MapFrom(src => src.PublishDate.ToString("yyyy-MM-dd")));
         }
     }
 }

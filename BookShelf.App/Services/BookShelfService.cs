@@ -16,7 +16,7 @@ namespace BookShelf.App.Services
             _bookRepository = bookRepository;
         }
 
-        public async Task Add(BookDto model)
+        public async Task Add(BookDtoRequest model)
         {
             await _bookRepository.CreateAsync(_mapper.Map<Book>(model));
         }
@@ -25,19 +25,19 @@ namespace BookShelf.App.Services
             await _bookRepository.Delete(id);
         }
 
-        public async Task<List<BookDto>> GetAll()
+        public async Task<List<BookDtoResponse>> GetAll()
         {
             var dates = await _bookRepository.GetAll();
 
-            return dates.Select(_mapper.Map<BookDto>).ToList();
+            return dates.Select(_mapper.Map<BookDtoResponse>).ToList();
         }
 
-        public async Task<BookDto> GetById(string id)
+        public async Task<BookDtoResponse> GetById(string id)
         {
-            return _mapper.Map<BookDto>(await _bookRepository.GetById(id));
+            return _mapper.Map<BookDtoResponse>(await _bookRepository.GetById(id));
         }
 
-        public async Task Update(string id, BookDto model)
+        public async Task Update(BookDtoResponse model)
         {
             await _bookRepository.UpdateAsync(_mapper.Map<Book>(model));
 

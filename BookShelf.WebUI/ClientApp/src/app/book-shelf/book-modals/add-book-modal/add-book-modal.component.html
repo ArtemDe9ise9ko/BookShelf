@@ -1,0 +1,49 @@
+<div class="modal fade" id="newBookModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Book</h5>
+          <button type="button" class="close" data-bs-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+  
+        <div class="modal-body">
+          <form (ngSubmit)="addBook()" class="book-form" [formGroup]="newBookForm">
+            <div class="form-group">
+              <label for="name">Title</label>
+              <input type="text" name="title" id="title" formControlName="title"
+                [ngClass]="{'invalid-border': showValidationErrors && newBookForm.get('title')?.invalid}">
+              <div *ngIf="showValidationErrors && newBookForm.get('title')?.errors?.required" class="text-danger">Title required.</div>
+              <div *ngIf="showValidationErrors && newBookForm.get('title')?.errors?.invalidFormat" class="text-danger">Title should started from Uppercase value.</div>
+            </div>
+            <div class="form-group">
+              <label for="name">Page Count</label>
+              <input type="text" name="pageCount" id="pageCount" formControlName="pageCount" 
+                [ngClass]="{'invalid-border': showValidationErrors && newBookForm.get('pageCount')?.invalid}">
+              <div *ngIf="showValidationErrors && newBookForm.get('pageCount')?.errors?.required" class="text-danger">Page Count required.</div>
+              <div *ngIf="showValidationErrors && newBookForm.get('pageCount')?.errors?.max" class="text-danger">Page Count no more than 100,000.</div>
+              <div *ngIf="showValidationErrors && newBookForm.get('pageCount')?.errors?.min" class="text-danger">Page Count no less than 2.</div>
+            </div>
+            <div class="form-group">
+              <label for="name">Publish Date</label>
+              <input type="date" name="publishDate" required id="publishDate" formControlName="publishDate"
+                [ngClass]="{'invalid-border': showValidationErrors && newBookForm.get('publishDate')?.invalid}">
+              <div *ngIf="showValidationErrors && newBookForm.get('publishDate')?.errors?.required" class="text-danger">Publish Date required.</div>
+              <div *ngIf="showValidationErrors && newBookForm.get('publishDate')?.errors?.maxlength" class="text-danger">Publish Date should consist max of 10-digit.</div>
+              <div *ngIf="showValidationErrors && newBookForm.get('publishDate')?.errors?.invalidFormat" class="text-danger">Publish Date has invalid format. Make sure what write all data right.</div>
+            </div>
+            <div class="form-group">
+              <label for="name">Description</label>
+              <textarea name="description" required id="description" formControlName="description"
+                [ngClass]="{'invalid-border': showValidationErrors && newBookForm.get('description')?.invalid}"></textarea>
+              <div *ngIf="showValidationErrors && newBookForm.get('description')?.errors?.required" class="text-danger">Description required.</div>
+              <div *ngIf="showValidationErrors && newBookForm.get('description')?.errors?.maxlength" class="text-danger">Description no more than 300 characters.</div>
+            </div>
+            <button type="submit" [attr.data-bs-dismiss]="newBookForm.valid ? 'modal' : null">Add Book</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  

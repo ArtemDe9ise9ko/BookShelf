@@ -6,8 +6,8 @@ using MediatR;
 namespace BookShelf.App.MediatR.BookHandler
 {
     public class BookQueryHandler :
-        IRequestHandler<GetAllBooksQuery, List<BookDto>>,
-        IRequestHandler<GetByIdBookQuery, BookDto>,
+        IRequestHandler<GetAllBooksQuery, List<BookDtoResponse>>,
+        IRequestHandler<GetByIdBookQuery, BookDtoResponse>,
         IRequestHandler<AddBookQuery>,
         IRequestHandler<UpdateBookQuery>,
         IRequestHandler<DeleteBookQuery>
@@ -19,11 +19,11 @@ namespace BookShelf.App.MediatR.BookHandler
             _bookShelfService = bookShelfService;
         }
 
-        public async Task<List<BookDto>> Handle(GetAllBooksQuery request, CancellationToken cancellationToken)
+        public async Task<List<BookDtoResponse>> Handle(GetAllBooksQuery request, CancellationToken cancellationToken)
         {
             return await _bookShelfService.GetAll();
         }
-        public async Task<BookDto> Handle(GetByIdBookQuery request, CancellationToken cancellationToken)
+        public async Task<BookDtoResponse> Handle(GetByIdBookQuery request, CancellationToken cancellationToken)
         {
             return await _bookShelfService.GetById(request.Id);
         }
@@ -33,7 +33,7 @@ namespace BookShelf.App.MediatR.BookHandler
         }
         public async Task Handle(UpdateBookQuery request, CancellationToken cancellationToken)
         {
-            await _bookShelfService.Update(request.Id, request.BookDto);
+            await _bookShelfService.Update(request.BookDtoResponse);
         }
         public async Task Handle(DeleteBookQuery request, CancellationToken cancellationToken)
         {

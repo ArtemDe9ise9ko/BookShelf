@@ -17,7 +17,7 @@ namespace BookShelf.Infra.Db
         }
         public async Task<TEntity> GetById(string id)
         {
-            var entity = await _context.Set<TEntity>().FindAsync(id);
+            var entity = await _context.Set<TEntity>().FindAsync(Convert.ToInt32(id));
             if(entity == null) 
             {
                 throw new NotFoundException($"not found entity by id: {id}");
@@ -43,7 +43,7 @@ namespace BookShelf.Infra.Db
 
         public async Task<int> Delete(string id)
         {
-            var entity = await _context.Set<TEntity>().FindAsync(id);
+            var entity = await _context.Set<TEntity>().FindAsync(Convert.ToInt32(id));
             if (entity == null)
             {
                 throw new NotFoundException($"Entity with id '{id}' not found.");

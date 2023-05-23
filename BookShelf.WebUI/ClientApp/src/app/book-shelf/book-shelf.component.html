@@ -1,0 +1,70 @@
+<div class="input-group">
+  <div class="start-content">
+    <button type="button" class="btn btn-book-main-action" data-bs-toggle="modal" data-bs-target="#newBookModal">Add Book</button>
+    <app-add-book-modal></app-add-book-modal>
+  </div>
+  <div class="end-content">
+    <span class="input-group-text">
+      <i class="bi bi-search"></i>
+    </span>
+    <input type="text" [(ngModel)]="searchText" (ngModelChange)="filterBooks()" placeholder="Search by title" class="search-bar" />
+  </div>
+</div>
+
+<table class="table table-striped" aria-labelledby="tableLabel">
+  <thead>
+    <tr>
+      <th (click)="sortBooksByField('title')">
+        Title
+        <i class="bi" [ngClass]="{'bi-sort-up': sortDirection === 'asc', 'bi-sort-down': sortDirection === 'desc'}"></i>
+      </th>
+      <th>Description
+      </th>
+      <th (click)="sortBooksByField('pageCount')">
+        Page Count
+        <i class="bi" [ngClass]="{'bi-sort-up': sortDirection === 'asc', 'bi-sort-down': sortDirection === 'desc'}"></i>
+      </th>
+      <th (click)="sortBooksByField('publishDate')">
+        Publish Date
+        <i class="bi" [ngClass]="{'bi-sort-up': sortDirection === 'asc', 'bi-sort-down': sortDirection === 'desc'}"></i>
+      </th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="searchText === ''; else filteredBooksSection">
+      <tr *ngFor="let book of books" [class.selected]="book.bookId === selectedBookId" (click)="selectBook(book.bookId)">
+        <td>{{ book.title }}</td>
+        <td>{{ book.description }}</td>
+        <td>{{ book.pageCount }}</td>
+        <td>{{ book.publishDate }}</td>
+        <td>
+          <button type="button" class="btn-book-action float-end" (click)="removeBook(book.bookId)">
+            <i class="btn bi bi-x-circle-fill"></i>
+          </button>
+          <button type="button" class="btn-book-action float-end" data-bs-toggle="modal" data-bs-target="#updateBookModal"
+            (click)="editBook(book)">
+            <i class="btn bi bi-pencil-fill"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-container>
+    <ng-template #filteredBooksSection>
+      <tr *ngFor="let book of filteredBooks" [class.selected]="book.bookId === selectedBookId" (click)="selectBook(book.bookId)">
+        <td>{{ book.title }}</td>
+        <td>{{ book.description }}</td>
+        <td>{{ book.pageCount }}</td>
+        <td>{{ book.publishDate }}</td>
+        <td>
+          <button type="button" class="btn-book-action float-end" (click)="removeBook(book.bookId)">
+            <i class="btn bi bi-x-circle-fill"></i>
+          </button>
+          <button type="button" class="btn-book-action float-end" data-bs-toggle="modal" data-bs-target="#updateBookModal"
+            (click)="editBook(book)">
+            <i class="btn bi bi-pencil-fill"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </tbody>
+</table>
