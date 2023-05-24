@@ -2,7 +2,6 @@
 using BookShelf.Infra.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 
 namespace BookShelf.WebUI.Controllers
 {

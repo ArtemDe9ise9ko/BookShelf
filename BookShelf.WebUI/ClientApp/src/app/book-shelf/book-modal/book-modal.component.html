@@ -1,0 +1,52 @@
+ <div class="modal fade" id="bookModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ isUpdateMode ? 'Edit Book' : 'Add Book' }}</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" (click)="resetForm()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="onSubmit()" class="book-form" [formGroup]="bookForm">
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" name="title" id="title" formControlName="title"
+                [ngClass]="{'invalid-border': showValidationErrors && bookForm.get('title')?.invalid}"
+                [ngModel]="bookModel?.title">
+              <div *ngIf="showValidationErrors && bookForm.get('title')?.errors?.required" class="text-danger">Title required.</div>
+              <div *ngIf="showValidationErrors && bookForm.get('title')?.errors?.invalidFormat" class="text-danger">Title should start with an uppercase value.</div>
+            </div>
+            <div class="form-group">
+              <label for="pageCount">Page Count</label>
+              <input type="text" name="pageCount" id="pageCount" formControlName="pageCount"
+                [ngClass]="{'invalid-border': showValidationErrors && bookForm.get('pageCount')?.invalid}"
+                [ngModel]="bookModel?.pageCount">
+              <div *ngIf="showValidationErrors && bookForm.get('pageCount')?.errors?.required" class="text-danger">Page Count required.</div>
+              <div *ngIf="showValidationErrors && bookForm.get('pageCount')?.errors?.max" class="text-danger">Page Count should not exceed 100,000.</div>
+              <div *ngIf="showValidationErrors && bookForm.get('pageCount')?.errors?.min" class="text-danger">Page Count should be at least 2.</div>
+            </div>
+            <div class="form-group">
+              <label for="publishDate">Publish Date</label>
+              <input type="date" name="publishDate" id="publishDate" formControlName="publishDate"
+                [ngClass]="{'invalid-border': showValidationErrors && bookForm.get('publishDate')?.invalid}"
+                [ngModel]="bookModel?.publishDate">
+              <div *ngIf="showValidationErrors && bookForm.get('publishDate')?.errors?.required" class="text-danger">Publish Date required.</div>
+              <div *ngIf="showValidationErrors && bookForm.get('publishDate')?.errors?.maxlength" class="text-danger">Publish Date should not exceed 10 digits.</div>
+              <div *ngIf="showValidationErrors && bookForm.get('publishDate')?.errors?.invalidFormat" class="text-danger">Publish Date has an invalid format. Please enter a valid date.</div>
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea name="description" id="description" formControlName="description"
+                [ngClass]="{'invalid-border': showValidationErrors && bookForm.get('description')?.invalid}"
+                [ngModel]="bookModel?.description"></textarea>
+              <div *ngIf="showValidationErrors && bookForm.get('description')?.errors?.required" class="text-danger">Description required.</div>
+              <div *ngIf="showValidationErrors && bookForm.get('description')?.errors?.maxlength" class="text-danger">Description should not exceed 300 characters.</div>
+            </div>
+            <button [disabled]="isLoading" type="submit" [attr.data-bs-dismiss]="bookForm.valid ? 'modal' : null">{{ isUpdateMode ? 'Save Changes' : 'Add Book' }}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
