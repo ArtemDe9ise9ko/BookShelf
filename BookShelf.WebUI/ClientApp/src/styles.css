@@ -1,6 +1,12 @@
 @import "~bootstrap-icons/font/bootstrap-icons.css";
-/* @import '~ngx-bootstrap/datepicker/bs-datepicker.css'; */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+.basic-container {
+  height: 30px;
+  padding-left: 20px;
+}
 body {
+    font-family: Roboto, Arial, sans-serif;
     margin: 0;
     background-color: #fafafa;
     display: block;
@@ -13,6 +19,12 @@ a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
+}
+.filter-buttons{
+  /* padding-left: 5px; */
+  display: grid;
+  padding-left: 5px;
+  padding-bottom: 5px;
 }
 html {
   font-size: 14px;
@@ -61,6 +73,7 @@ button{
 }
 .btn-book-main-action{
   margin: 15px 0;
+  margin-left: 30px;
   justify-content: baseline !important;
 }
 .btn-book-main-action:hover{
@@ -115,7 +128,6 @@ tr.selected {
 }
 .start-content {
   display: flex;
-  align-items: baseline;
 }
 .end-content {
   display: flex;
