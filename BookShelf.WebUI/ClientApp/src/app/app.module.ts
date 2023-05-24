@@ -1,15 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, FormBuilder } from '@angular/forms';
+import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { BookShelfComponent } from './book-shelf/book-shelf.component';
 import { BookModalComponent } from './book-shelf/book-modal/book-modal.component';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DemoMaterialModule } from './DemoMaterialModule';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
@@ -24,8 +24,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    MatDatepickerModule,
-    MatInputModule,
+    BrowserAnimationsModule,
+    DemoMaterialModule,
     MatNativeDateModule,
     RouterModule.forRoot([
       { path: '',   redirectTo: 'book-shelf', pathMatch: 'full' },
@@ -36,7 +36,9 @@ import { MatNativeDateModule } from '@angular/material/core';
   exports: [
     BookShelfComponent
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

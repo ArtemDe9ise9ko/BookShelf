@@ -2,21 +2,28 @@
   <div class="start-content">
     <button type="button" class="btn btn-book-main-action" data-bs-toggle="modal" data-bs-target="#bookModal">Add Book</button>
     <app-book-modal [isUpdateMode]="false"></app-book-modal>
-  </div>
-
-  <div class="date-filter">
-  <button class="btn btn-primary" (click)="setThisMonth()">This Month</button>
-  <button class="btn btn-primary" (click)="setThisYear()">This Year</button>
-
-  <br>
-
-  <mat-form-field>
-    <input matInput [matDatepicker]="picker" placeholder="Select date range" [(ngModel)]="selectedDateRange">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-</div>
-
+    <button class="btn btn-book-main-action" (click)="toggleChart()">
+      <i class="bi bi-bar-chart-fill"></i>
+    </button>
+    <div class="mat-app-background basic-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate placeholder="Start date" [(ngModel)]="selectedDateRange[0]" (ngModelChange)="filterBooksByDateRange()">
+          <input matEndDate placeholder="End date" [(ngModel)]="selectedDateRange[1]" (ngModelChange)="filterBooksByDateRange()">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    </div>
+    
+    <div class="filter-buttons">
+      <button class="btn" (click)="setThisMonthDateRange()">This Month</button>
+      <button class="btn" (click)="setThisYearDateRange()">This Year</button>
+    </div>
+  </div> 
+  <button class="btn" (click)="exportToExcel()"> <i class="bi bi-file-earmark-excel-fill"></i>Export to Excel</button>
+  <button class="btn" (click)="exportToPDF()"><i class="bi bi-file-earmark-pdf-fill"></i>Export to PDF</button>
   <div class="end-content">
     <span class="input-group-text">
       <i class="bi bi-search"></i>
@@ -24,6 +31,7 @@
     <input type="text" [(ngModel)]="searchText" (ngModelChange)="filterBooks()" placeholder="Search by title" class="search-bar" />
   </div>
 </div>
+
 
 <table class="table table-striped" aria-labelledby="tableLabel">
   <thead>
@@ -46,7 +54,7 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngIf="searchText === ''; else filteredBooksSection">
+    <ng-container *ngIf="searchText === '' && selectedDateRange.length !== 2; else filteredBooksSection">
       <tr *ngFor="let book of books" [class.selected]="book.bookId === selectedBookId" (click)="selectBook(book.bookId)">
         <td>{{ book.title }}</td>
         <td>{{ book.description }}</td>
@@ -55,6 +63,10 @@
         <td>
           <button type="button" class="btn-book-action float-end" (click)="removeBook(book.bookId)">
             <i class="btn bi bi-x-circle-fill"></i>
+          </button>
+          <button *ngIf="isBookReadyToReset(book.bookId)"
+            type="button" class="btn-book-action float-end" (click)="resetBook(book.bookId)">
+            <i class="btn bi bi-reply-fill"></i>
           </button>
           <button type="button" class="btn-book-action float-end" data-bs-target="#bookModal" data-bs-toggle="modal" (click)="openEditModal(book)">
             <i class="btn bi bi-pencil-fill"></i>
@@ -73,6 +85,10 @@
           <button type="button" class="btn-book-action float-end" (click)="removeBook(book.bookId)">
             <i class="btn bi bi-x-circle-fill"></i>
           </button>
+          <button *ngIf="isBookReadyToReset(book.bookId)"
+            type="button" class="btn-book-action float-end" (click)="resetBook(book.bookId)">
+            <i class="btn bi bi-reply-fill"></i>
+          </button>
           <button type="button" data-bs-toggle="modal" data-bs-target="#bookModal" class="btn-book-action float-end" (click)="openEditModal(book)">
             <i class="btn bi bi-pencil-fill"></i>
           </button>
@@ -82,3 +98,4 @@
     </ng-template>
   </tbody>
 </table>
+<canvas id="bookChart" #bookChart></canvas>

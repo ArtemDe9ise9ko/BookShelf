@@ -26,14 +26,12 @@ export class BookModalComponent {
   ngOnInit() {
     this.setForm();
   }
-
   public setForm() {
     this.bookForm = this.formBuilder.group({
       title: ['', [Validators.required, titleCaseValidator]],
       description: ['', Validators.required],
       pageCount: ['', [Validators.required, Validators.max(100000), Validators.min(2)]],
       publishDate: ['', [Validators.required, Validators.maxLength(10)]]
-      // , checkYearValidity
     });
 
     if (this.isUpdateMode && this.bookModel) {
@@ -66,6 +64,7 @@ export class BookModalComponent {
         this.bookShelfComponent.loadBooks();
         this.isLoading = false;
         this.showValidationErrors = false;
+        this.bookShelfComponent.generateChart();
       },
       error => {
         console.error(error);
@@ -76,26 +75,22 @@ export class BookModalComponent {
   }
 
   updateBook() {
-    const bookId = this.bookModel?.bookId;
-    if (bookId) {
-      const updatedBook: IBookRequest = {
-        bookId,
-        ...this.bookForm.value
-      };
+    this.bookForm.value.bookId = this.bookModel?.bookId;
 
-      this.bookService.updateBook(updatedBook).subscribe(
-        () => {
-          this.bookShelfComponent.loadBooks();
-          this.isLoading = false;
-          this.showValidationErrors = false;
-        },
-        error => {
-          console.error(error);
-          this.isLoading = false;
-          this.showValidationErrors = false;
-        }
-      );
-    }
+    this.bookService.updateBook(this.bookForm.value).subscribe(
+      () => {
+        this.bookShelfComponent.loadBooks();
+        this.bookShelfComponent.addResetBookModel(this.bookModel!);
+        this.isLoading = false;
+        this.showValidationErrors = false;
+        this.bookShelfComponent.generateChart();
+      },
+      error => {
+        console.error(error);
+        this.isLoading = false;
+        this.showValidationErrors = false;
+      }
+    );
   }
   resetForm() {
     this.bookForm.reset();
