@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ElementRef } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { IBookResponse, IBookRequest } from '../../tools/Interfaces/IBook';
 import { BookService } from '../../tools/services/BookHttpService';
 import { BookShelfComponent } from '../book-shelf.component';
 import { checkYearValidity, titleCaseValidator } from '../../tools/Validator/Validator';
+import { BookChartService } from '../../tools/services/BookChartService';
 
 @Component({
   selector: 'app-book-modal',
@@ -20,7 +21,9 @@ export class BookModalComponent {
   constructor(
     private formBuilder: FormBuilder,
     private bookService: BookService,
-    private bookShelfComponent: BookShelfComponent
+    private bookShelfComponent: BookShelfComponent,
+    private chartService: BookChartService,
+    private elementRef: ElementRef
   ) {}
 
   ngOnInit() {
@@ -28,7 +31,7 @@ export class BookModalComponent {
   }
   public setForm() {
     this.bookForm = this.formBuilder.group({
-      title: ['', [Validators.required, titleCaseValidator]],
+      title: ['', [Validators.required, titleCaseValidator()]],
       description: ['', Validators.required],
       pageCount: ['', [Validators.required, Validators.max(100000), Validators.min(2)]],
       publishDate: ['', [Validators.required, Validators.maxLength(10)]]
@@ -43,7 +46,6 @@ export class BookModalComponent {
       });
     }
   }
-
   onSubmit() {
     this.showValidationErrors = true;
     if (this.bookForm.invalid || this.isLoading) {
@@ -57,14 +59,13 @@ export class BookModalComponent {
       this.addBook();
     }
   }
-
   addBook() {
     this.bookService.addBook(this.bookForm.value).subscribe(
       () => {
         this.bookShelfComponent.loadBooks();
         this.isLoading = false;
         this.showValidationErrors = false;
-        this.bookShelfComponent.generateChart();
+        this.chartService.generateChart(this.bookShelfComponent.books, this.elementRef);
       },
       error => {
         console.error(error);
@@ -73,7 +74,6 @@ export class BookModalComponent {
       }
     );
   }
-
   updateBook() {
     this.bookForm.value.bookId = this.bookModel?.bookId;
 
@@ -83,7 +83,7 @@ export class BookModalComponent {
         this.bookShelfComponent.addResetBookModel(this.bookModel!);
         this.isLoading = false;
         this.showValidationErrors = false;
-        this.bookShelfComponent.generateChart();
+        this.chartService.generateChart(this.bookShelfComponent.books, this.elementRef);
       },
       error => {
         console.error(error);

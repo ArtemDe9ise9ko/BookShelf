@@ -16,7 +16,7 @@ export function titleCaseValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const title = control.value as string;
       
-      if (title.charAt(0) == title.charAt(0).toUpperCase()) {
+      if (title.charAt(0) != title.charAt(0).toUpperCase()) {
         return { invalidFormat: true };
       }
   

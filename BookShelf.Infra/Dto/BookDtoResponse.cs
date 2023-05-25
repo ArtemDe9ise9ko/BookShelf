@@ -6,7 +6,7 @@ namespace BookShelf.Infra.Dto
     public class BookDtoResponse
     {
         [Required]
-        public string BookId {  get; set; } = null!;
+        public string BookId { get; set; } = null!;
         [Required]
         [FirstLetterUppercase]
         public string Title { get; set; } = null!;

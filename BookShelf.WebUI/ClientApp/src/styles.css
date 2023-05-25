@@ -71,6 +71,10 @@ button{
   border: 0px;
   background-color: transparent;
 }
+.btn-book-main-action-first{
+  margin: 15px 0;
+  justify-content: baseline !important;
+}
 .btn-book-main-action{
   margin: 15px 0;
   margin-left: 30px;
@@ -93,6 +97,7 @@ button{
   font-weight: 700;
   padding: 5px 23px;
   transition: all .3s;
+  cursor: pointer;
 }
 .btn:hover{
   box-shadow: 0 0 5px rgba(0,0,0,.3);

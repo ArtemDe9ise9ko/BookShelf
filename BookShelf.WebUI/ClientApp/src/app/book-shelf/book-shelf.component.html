@@ -1,7 +1,7 @@
 <div class="input-group">
   <div class="start-content">
-    <button type="button" class="btn btn-book-main-action" data-bs-toggle="modal" data-bs-target="#bookModal">Add Book</button>
-    <app-book-modal [isUpdateMode]="false"></app-book-modal>
+    <button type="button" class="btn btn-book-main-action-first" data-bs-toggle="modal" data-bs-target="#bookModal" (click)="openAddModal()">Add Book</button>
+    <app-book-modal [bookModel]="undefined" [isUpdateMode]="false"></app-book-modal>
     <button class="btn btn-book-main-action" (click)="toggleChart()">
       <i class="bi bi-bar-chart-fill"></i>
     </button>
